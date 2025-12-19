@@ -1,0 +1,57 @@
+services:
+  # Symfony Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: demo-backend
+    volumes:
+      - ./backend:/var/www/html
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=dev
+      - DATABASE_URL=mysql://demo:demo@database:3306/demo_db
+    depends_on:
+      - database
+    networks:
+      - demo-network
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: demo-frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=http://localhost:8000/api
+    networks:
+      - demo-network
+
+  # MySQL Database
+  database:
+    image: mysql:8.0
+    container_name: demo-database
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: demo_db
+      MYSQL_USER: demo
+      MYSQL_PASSWORD: demo
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - demo-network
+
+networks:
+  demo-network:
+    driver: bridge
+
+volumes:
+  db_data:
