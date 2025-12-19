@@ -32,3 +32,4 @@ docker-compose.override.yml
 
 # Workshop internal
 WORKSHOP_SCENARIO.md
+WORKSHOP_INVITE.md
