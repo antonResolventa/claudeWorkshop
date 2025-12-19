@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TaskRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
@@ -22,35 +23,44 @@ class Task
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['task:read', 'user:details'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 3, max: 255)]
+    #[Groups(['task:read', 'user:details'])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['task:read', 'task:details'])]
     private ?string $description = null;
 
     #[ORM\Column(length: 20)]
     #[Assert\Choice(choices: [self::STATUS_PENDING, self::STATUS_IN_PROGRESS, self::STATUS_COMPLETED])]
+    #[Groups(['task:read', 'user:details'])]
     private string $status = self::STATUS_PENDING;
 
     #[ORM\Column(length: 20)]
     #[Assert\Choice(choices: [self::PRIORITY_LOW, self::PRIORITY_MEDIUM, self::PRIORITY_HIGH])]
+    #[Groups(['task:read'])]
     private string $priority = self::PRIORITY_MEDIUM;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['task:read'])]
     private ?\DateTimeImmutable $dueDate = null;
 
     #[ORM\Column]
+    #[Groups(['task:read', 'task:details'])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['task:read', 'task:details'])]
     private ?\DateTimeImmutable $completedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['task:read'])]
     private ?User $assignee = null;
 
     public function __construct()
