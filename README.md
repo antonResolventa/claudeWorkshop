@@ -13,13 +13,13 @@ Demo project for Claude Code + Serena Workshop.
 
 ```bash
 # Start all services
-docker-compose up -d
+docker compose up -d
 
 # Install backend dependencies
-docker-compose exec backend composer install
+docker compose exec backend composer install
 
 # Install frontend dependencies
-docker-compose exec frontend npm install
+docker compose exec frontend npm install
 ```
 
 ## Access
