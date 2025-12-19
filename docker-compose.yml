@@ -45,7 +45,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     ports:
-      - "33060:3306"
+      - "33066:3306"
     networks:
       - demo-network
 

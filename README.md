@@ -27,7 +27,7 @@ docker compose exec frontend npm install
 
 - Frontend: http://localhost:4173
 - Backend API: http://localhost:9080/api
-- Database: localhost:33060
+- Database: localhost:33066
 
 ## API Endpoints
 
