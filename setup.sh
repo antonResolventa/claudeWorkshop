@@ -13,9 +13,11 @@ echo ""
 echo -e "${GREEN}▶ Starting Docker containers...${NC}"
 docker compose up -d
 
-# Wait for database
+# Wait for database to be ready
 echo -e "${GREEN}▶ Waiting for database...${NC}"
-sleep 5
+until docker compose exec -T database mysqladmin ping -h"localhost" -u"demo" -p"demo" --silent 2>/dev/null; do
+    sleep 2
+done
 
 # Install backend dependencies
 echo -e "${GREEN}▶ Installing backend dependencies...${NC}"
@@ -23,7 +25,7 @@ docker compose exec -T backend composer install --no-interaction
 
 # Run migrations
 echo -e "${GREEN}▶ Running database migrations...${NC}"
-docker compose exec -T backend php bin/console doctrine:migrations:migrate --no-interaction 2>/dev/null || true
+docker compose exec -T backend php bin/console doctrine:migrations:migrate --no-interaction
 
 # Install frontend dependencies
 echo -e "${GREEN}▶ Installing frontend dependencies...${NC}"
