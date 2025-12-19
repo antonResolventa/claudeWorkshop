@@ -31,7 +31,7 @@ COPY . .
 RUN if [ -f composer.json ]; then composer dump-autoload --optimize; fi
 
 # Expose port
-EXPOSE 8000
+EXPOSE 9080
 
 # Start Symfony dev server
-CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
+CMD ["php", "-S", "0.0.0.0:9080", "-t", "public"]
