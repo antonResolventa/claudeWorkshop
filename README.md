@@ -12,13 +12,14 @@ Demo project for Claude Code + Serena Workshop.
 ## Quick Start
 
 ```bash
-# Start all services
+./setup.sh
+```
+
+Or manually:
+
+```bash
 docker compose up -d
-
-# Install backend dependencies
 docker compose exec backend composer install
-
-# Install frontend dependencies
 docker compose exec frontend npm install
 ```
 
